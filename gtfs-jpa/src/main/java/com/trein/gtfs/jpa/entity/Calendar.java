@@ -20,8 +20,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "calendars")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_calendars")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Calendar {
 
     @Id

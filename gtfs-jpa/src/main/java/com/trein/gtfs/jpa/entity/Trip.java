@@ -25,9 +25,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "trips")
+@Entity(name = "gtfs_trips")
 @Table(indexes = { @Index(name = "o_trip_idx", columnList = "o_trip_id") })
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Trip {
 
     @Id

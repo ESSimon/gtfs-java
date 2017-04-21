@@ -29,8 +29,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "calendar_dates")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_calendar_dates")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class CalendarDate {
     
     @Id

@@ -1,28 +1,19 @@
 package com.trein.gtfs.jpa.entity;
 
-import java.sql.Time;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.sql.Time;
 
 /**
  * Times that a vehicle arrives at and departs from individual stops for each trip.
  *
  * @author trein
  */
-@Entity(name = "stop_times")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_stop_times")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class StopTime {
     
     @Id

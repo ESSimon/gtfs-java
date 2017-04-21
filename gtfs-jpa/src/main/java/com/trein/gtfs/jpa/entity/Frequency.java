@@ -26,8 +26,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "frequencies")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_frequencies")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Frequency {
 
     @Id

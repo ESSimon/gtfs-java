@@ -26,8 +26,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "feeds")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_feeds")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FeedInfo {
 
     @Id

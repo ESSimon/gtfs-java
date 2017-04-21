@@ -1,18 +1,10 @@
 package com.trein.gtfs.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 
 /**
  * One or more transit agencies that provide the data in this feed. Hibernate disables insert
@@ -20,9 +12,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "agencies")
+@Entity(name = "gtfs_agencies")
 @Table(indexes = { @Index(name = "o_agency_idx", columnList = "o_agency_id") })
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Agency {
 
     @Id

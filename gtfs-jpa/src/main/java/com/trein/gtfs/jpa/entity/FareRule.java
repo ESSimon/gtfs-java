@@ -31,8 +31,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "fare_rules")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_fare_rules")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class FareRule {
 
     @Id

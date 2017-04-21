@@ -1,22 +1,14 @@
 package com.trein.gtfs.jpa.entity.app;
 
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity(name = "audit")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity(name = "gtfs_audit")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Audit {
     
     @Id

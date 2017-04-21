@@ -21,9 +21,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "routes")
+@Entity(name = "gtfs_routes")
 @Table(indexes = { @Index(name = "o_route_idx", columnList = "o_route_id") })
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Route {
     
     @Id

@@ -12,8 +12,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity(name = "fares")
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "gtfs_fares")
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Fare {
 
     @Id

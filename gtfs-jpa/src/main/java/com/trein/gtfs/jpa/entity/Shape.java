@@ -19,9 +19,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
-@Entity(name = "shapes")
+@Entity(name = "gtfs_shapes")
 @Table(indexes = { @Index(name = "o_shape_idx", columnList = "o_shape_id") })
-@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Shape implements Comparable<Shape> {
 
     @Id
