@@ -1,17 +1,14 @@
 package com.googlecode.jcsv.annotations.processors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.googlecode.jcsv.annotations.ValueProcessor;
+import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.Test;
-
-import com.googlecode.jcsv.annotations.ValueProcessor;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("boxing")
 public class ValueProcessorsTest {
@@ -157,7 +154,7 @@ public class ValueProcessorsTest {
         
         assertEquals(df.parse("12.12.2012"), processor.processValue("12.12.2012"));
         assertEquals(df.parse("01.01.1970"), processor.processValue("01.01.1970"));
-        assertEquals(18000000, processor.processValue("01.01.1970").getTime());
+        assertEquals(-3600000, processor.processValue("01.01.1970").getTime());
     }
 
     @Test(expected = IllegalArgumentException.class)
