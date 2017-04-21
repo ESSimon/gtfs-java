@@ -1,11 +1,10 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.AvailabilityType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.sql.Time;
 
 /**
@@ -13,58 +12,21 @@ import java.sql.Time;
  *
  * @author trein
  */
-@Entity(name = "gtfs_stop_times")
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class StopTime {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class StopTimeDto {
     private long id;
-    
-    @Column(name = "arrival_time", nullable = false)
     private Time arrivalTime;
-    
-    @Column(name = "departure_time", nullable = false)
     private Time departureTime;
-
-    @ManyToOne
-    @JoinColumn(name = "trip", nullable = false)
-    private Trip trip;
-    
-    @ManyToOne
-    @JoinColumn(name = "stop", nullable = false)
-    private Stop stop;
-    
-    @Column(name = "stop_sequence")
+    private TripDto trip;
+    private StopDto stop;
     private int stopSequence;
-    
-    @Column(name = "stop_headsign")
     private String stopHeadsign;
-    
-    @Column(name = "pick_up_time")
     private AvailabilityType pickupType;
-    
-    @Column(name = "drop_off_type")
     private AvailabilityType dropoffType;
-    
-    @Column(name = "shape_distance_traveled")
     private double shapeDistanceTraveled;
-    
-    StopTime() {
-    }
-
-    public StopTime(Trip trip, Time arrivalTime, Time departureTime, Stop stop, int stopSequence, String stopHeadsign,
-            AvailabilityType pickupType, AvailabilityType dropoffType, double shapeDistanceTraveled) {
-        this.trip = trip;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
-        this.stop = stop;
-        this.stopSequence = stopSequence;
-        this.stopHeadsign = stopHeadsign;
-        this.pickupType = pickupType;
-        this.dropoffType = dropoffType;
-        this.shapeDistanceTraveled = shapeDistanceTraveled;
-    }
     
     public long getId() {
         return this.id;
@@ -76,7 +38,7 @@ public class StopTime {
      *
      * @return trip related to current stop time.
      */
-    public Trip getTrip() {
+    public TripDto getTrip() {
         return this.trip;
     }
     
@@ -161,7 +123,7 @@ public class StopTime {
      *
      * @return stop related to current stop time.
      */
-    public Stop getStop() {
+    public StopDto getStop() {
         return this.stop;
     }
     
@@ -231,19 +193,4 @@ public class StopTime {
         return this.shapeDistanceTraveled;
     }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

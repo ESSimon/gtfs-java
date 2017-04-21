@@ -1,11 +1,10 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.ExceptionType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -23,36 +22,20 @@ import java.util.Date;
  *
  * @author trein
  */
-@Entity(name = "gtfs_calendar_dates")
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class CalendarDate {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CalendarDateDto {
     private long id;
-    
-    @Column(name = "o_service_id", nullable = false)
     private String serviceId;
-    
-    @Column(name = "date", nullable = false)
     private Date date;
-    
-    @Column(name = "exception_type")
     private ExceptionType exceptionType;
-    
-    CalendarDate() {
-    }
-    
-    public CalendarDate(String serviceId, Date date, ExceptionType exceptionType) {
-        this.serviceId = serviceId;
-        this.date = date;
-        this.exceptionType = exceptionType;
-    }
-    
+
     public long getId() {
         return this.id;
     }
-    
+
     /**
      * service_id Required The service_id contains an ID that uniquely identifies a set of dates
      * when a service exception is available for one or more routes. Each (service_id, date) pair
@@ -66,7 +49,7 @@ public class CalendarDate {
     public String getServiceId() {
         return this.serviceId;
     }
-    
+
     /**
      * date Required The date field specifies a particular date when service availability is
      * different than the norm. You can use the exception_type field to indicate whether service is
@@ -77,7 +60,7 @@ public class CalendarDate {
     public Date getDate() {
         return this.date;
     }
-    
+
     /**
      * exception_type Required The exception_type indicates whether service is available on the date
      * specified in the date field.
@@ -87,20 +70,5 @@ public class CalendarDate {
      */
     public ExceptionType getExceptionType() {
         return this.exceptionType;
-    }
-    
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 }

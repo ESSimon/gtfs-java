@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * The payment_method field indicates when the fare must be paid. Valid
@@ -18,8 +18,8 @@ public enum PaymentType {
      * values for this field are:
      *
      * <pre>
-     * 0 - Fare is paid on board.
-     * 1 - Fare must be paid before boarding.
+     * 0 - FareDto is paid on board.
+     * 1 - FareDto must be paid before boarding.
      * </pre>
      */
     public int getCode() {

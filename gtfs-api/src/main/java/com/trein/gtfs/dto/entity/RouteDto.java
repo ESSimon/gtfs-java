@@ -1,69 +1,30 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.RouteType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Transit routes. A route is a group of trips that are displayed to riders as a single service.
  *
  * @author trein
  */
-@Entity(name = "gtfs_routes")
-@Table(indexes = { @Index(name = "o_route_idx", columnList = "o_route_id") })
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Route {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RouteDto {
     private long id;
-    
-    @Column(name = "o_route_id")
     private String routeId;
-    
-    @ManyToOne
-    @JoinColumn(name = "agency", nullable = false)
-    private Agency agency;
-    
-    @Column(name = "short_name", nullable = false)
+    private AgencyDto agency;
     private String shortName;
-    
-    @Column(name = "long_name", nullable = false)
     private String longName;
-
-    @Column(name = "route_type")
     private RouteType type;
-    
-    @Column(name = "description")
     private String desc;
-    
-    @Column(name = "url")
     private String url;
-    
-    @Column(name = "hex_path_color")
     private String hexPathColor;
-    
-    @Column(name = "hex_text_color")
     private String hexTextColor;
-    
-    Route() {
-    }
-    
-    public Route(String routeId, Agency agency, String shortName, String longName, String desc, RouteType type, String url,
-            String hexPathColor, String hexTextColor) {
-        this.routeId = routeId;
-        this.agency = agency;
-        this.shortName = shortName;
-        this.longName = longName;
-        this.desc = desc;
-        this.type = type;
-        this.url = url;
-        this.hexPathColor = hexPathColor;
-        this.hexTextColor = hexTextColor;
-    }
 
     public long getId() {
         return this.id;
@@ -78,7 +39,7 @@ public class Route {
     public String getRouteId() {
         return this.routeId;
     }
-    
+
     /**
      * agency_id Optional The agency_id field defines an agency for the specified route. This value
      * is referenced from the agency.txt file. Use this field when you are providing data for routes
@@ -86,10 +47,10 @@ public class Route {
      *
      * @return agency related to this given route.
      */
-    public Agency getAgency() {
+    public AgencyDto getAgency() {
         return this.agency;
     }
-    
+
     /**
      * route_short_name Required The route_short_name contains the short name of a route. This will
      * often be a short, abstract identifier like "32", "100X", or "Green" that riders use to
@@ -104,7 +65,7 @@ public class Route {
     public String getShortName() {
         return this.shortName;
     }
-    
+
     /**
      * route_long_name Required The route_long_name contains the full name of a route. This name is
      * generally more descriptive than the route_short_name and will often include the route's
@@ -118,11 +79,11 @@ public class Route {
     public String getLongName() {
         return this.longName;
     }
-    
+
     /**
      * route_desc Optional The route_desc field contains a description of a route. Please provide
      * useful, quality information. Do not simply duplicate the name of the route. For example,
-     *
+     * <p>
      * <pre>
      * A trains operate between Inwood-207 St, Manhattan and Far Rockaway-Mott Avenue, Queens at all times.
      * Also from about 6AM until about midnight, additional A trains operate between Inwood-207 St and
@@ -134,7 +95,7 @@ public class Route {
     public String getDesc() {
         return this.desc;
     }
-    
+
     /**
      * route_type Required The route_type field describes the type of transportation used on a
      * route.
@@ -145,7 +106,7 @@ public class Route {
     public RouteType getType() {
         return this.type;
     }
-    
+
     /**
      * route_url Optional The route_url field contains the URL of a web page about that particular
      * route. This should be different from the agency_url. The value must be a fully qualified URL
@@ -158,7 +119,7 @@ public class Route {
     public String getUrl() {
         return this.url;
     }
-    
+
     /**
      * route_color Optional In systems that have colors assigned to routes, the route_color field
      * defines a color that corresponds to a route. The color must be provided as a six-character
@@ -174,7 +135,7 @@ public class Route {
     public String getHexPathColor() {
         return this.hexPathColor;
     }
-    
+
     /**
      * route_text_color Optional The route_text_color field can be used to specify a legible color
      * to use for text drawn against a background of route_color. The color must be provided as a
@@ -187,20 +148,4 @@ public class Route {
     public String getHexTextColor() {
         return this.hexTextColor;
     }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

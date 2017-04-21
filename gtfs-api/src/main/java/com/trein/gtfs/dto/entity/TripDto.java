@@ -1,12 +1,10 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.DirectionType;
-import com.trein.gtfs.dto.entity.WheelchairType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -14,60 +12,21 @@ import java.util.List;
  *
  * @author trein
  */
-@Entity(name = "gtfs_trips")
-@Table(indexes = { @Index(name = "o_trip_idx", columnList = "o_trip_id") })
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Trip {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class TripDto {
     private long id;
-    
-    @Column(name = "o_trip_id", nullable = false)
     private String tripId;
-
-    @ManyToOne
-    @JoinColumn(name = "route", nullable = false)
-    private Route route;
-
-    @ManyToMany
-    @OrderColumn(name = "sequence")
-    private List<Shape> shapes;
-    
-    @Column(name = "o_service_id", nullable = false)
+    private RouteDto route;
+    private List<ShapeDto> shapes;
     private String serviceId;
-
-    @Column(name = "headsign")
     private String headsign;
-
-    @Column(name = "short_name")
     private String shortName;
-
-    @Column(name = "block_id")
     private int blockId;
-    
-    @Column(name = "direction_type")
     private DirectionType directionType;
-
-    @Column(name = "wheelchair_type")
     private WheelchairType wheelchairType;
-
-    Trip() {
-
-    }
-
-    public Trip(String tripId, Route route, String serviceId, String headsign, String shortName, DirectionType directionType,
-            int blockId, List<Shape> shapes, WheelchairType wheelchairType) {
-        this.tripId = tripId;
-        this.route = route;
-        this.serviceId = serviceId;
-        this.headsign = headsign;
-        this.shortName = shortName;
-        this.directionType = directionType;
-        this.blockId = blockId;
-        this.shapes = shapes;
-        this.wheelchairType = wheelchairType;
-    }
 
     public long getId() {
         return this.id;
@@ -89,7 +48,7 @@ public class Trip {
      *
      * @return current trip's related route.
      */
-    public Route getRoute() {
+    public RouteDto getRoute() {
         return this.route;
     }
 
@@ -174,7 +133,7 @@ public class Trip {
      *
      * @return shares related to the current trip.
      */
-    public List<Shape> getShapes() {
+    public List<ShapeDto> getShapes() {
         return this.shapes;
     }
 
@@ -186,25 +145,8 @@ public class Trip {
      *     1 - indicates that the vehicle being used on this particular trip can accommodate at least one rider in a wheelchair
      *     2 - indicates that no riders in wheelchairs can be accommodated on this trip
      * </pre>
-     *
      */
     public WheelchairType getWheelchairType() {
         return this.wheelchairType;
     }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-
 }

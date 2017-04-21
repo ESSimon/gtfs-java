@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * The wheelchair_boarding field identifies whether wheelchair boardings are possible from the

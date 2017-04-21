@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * The transfers field specifies the number of transfers permitted on this fare.

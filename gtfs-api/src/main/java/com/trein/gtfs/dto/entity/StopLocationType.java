@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * The location_type field identifies whether this stop ID represents a stop or station. If no
@@ -21,7 +21,7 @@ public enum StopLocationType {
      * The location type field can have the following values:<br>
      *
      * <pre>
-     * <li>0 or blank - Stop. A location where passengers board or disembark from a transit vehicle.</li>
+     * <li>0 or blank - StopDto. A location where passengers board or disembark from a transit vehicle.</li>
      * <li>1 - Station. A physical structure or area that contains one or more stop.</li>
      * </pre>
      *

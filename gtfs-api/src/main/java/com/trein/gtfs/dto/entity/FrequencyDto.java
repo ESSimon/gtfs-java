@@ -1,11 +1,10 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.ExactTimeType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.sql.Time;
 
 /**
@@ -18,50 +17,27 @@ import java.sql.Time;
  *
  * @author trein
  */
-@Entity(name = "gtfs_frequencies")
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Frequency {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class FrequencyDto {
     private long id;
-
-    @ManyToOne
-    @JoinColumn(name = "trip", nullable = false)
-    private Trip trip;
-    
-    @Column(name = "start_time", nullable = false)
+    private TripDto trip;
     private Time startTime;
-    
-    @Column(name = "end_time", nullable = false)
     private Time endTime;
-
-    @Column(name = "headway_secs")
     private long headwaySecs;
-    
-    @Column(name = "exact_time")
     private ExactTimeType exactTime;
 
-    Frequency() {
-    }
-    
-    public Frequency(Trip trip, Time startTime, Time endTime, long headwaySecs, ExactTimeType exactTime) {
-        this.trip = trip;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.headwaySecs = headwaySecs;
-        this.exactTime = exactTime;
-    }
-    
     public long getId() {
         return this.id;
     }
     
     /**
      * trip_id Required The trip_id contains an ID that identifies a trip on which the specified
-     * frequency of service applies. Trip IDs are referenced from the trips.txt file.
+     * frequency of service applies. TripDto IDs are referenced from the trips.txt file.
      */
-    public Trip getTrip() {
+    public TripDto getTrip() {
         return this.trip;
     }
     
@@ -111,8 +87,8 @@ public class Frequency {
      * are:
      *
      * <pre>
-     * 0 or (empty) - Frequency-based trips are not exactly scheduled. This is the default behavior.
-     * 1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled
+     * 0 or (empty) - FrequencyDto-based trips are not exactly scheduled. This is the default behavior.
+     * 1 - FrequencyDto-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled
      * starting with trip_start_time = start_time + x * headway_secs for all x in (0, 1, 2, ...)
      * where trip_start_time < end_time.
      * </pre>
@@ -126,20 +102,4 @@ public class Frequency {
     public ExactTimeType getExactTime() {
         return this.exactTime;
     }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

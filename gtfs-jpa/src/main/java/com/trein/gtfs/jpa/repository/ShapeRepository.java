@@ -1,10 +1,9 @@
 package com.trein.gtfs.jpa.repository;
 
-import java.util.List;
-
+import com.trein.gtfs.jpa.entity.Shape;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.trein.gtfs.jpa.entity.Shape;
+import java.util.List;
 
 public interface ShapeRepository extends JpaRepository<Shape, Long> {
 

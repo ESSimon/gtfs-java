@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * route_type Required The route_type field describes the type of transportation used on a route.

@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * exact_times Optional The exact_times field determines if frequency-based trips should be exactly
@@ -25,8 +25,8 @@ public enum ExactTimeType {
      * Valid values for this field are:
      *
      * <pre>
-     * 0 or (empty) - Frequency-based trips are not exactly scheduled. This is the default behavior.
-     * 1 - Frequency-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled
+     * 0 or (empty) - FrequencyDto-based trips are not exactly scheduled. This is the default behavior.
+     * 1 - FrequencyDto-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled
      *  starting with trip_start_time = start_time + x * headway_secs for all x in (0, 1, 2, ...)
      *  where trip_start_time < end_time.
      * </pre>

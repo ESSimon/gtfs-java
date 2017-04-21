@@ -1,70 +1,47 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.TransferType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Rules for making connections at transfer points between routes.<br>
  * <br>
- * Trip planners normally calculate transfer points based on the relative proximity of stops in each
+ * TripDto planners normally calculate transfer points based on the relative proximity of stops in each
  * route. For potentially ambiguous stop pairs, or transfers where you want to specify a particular
  * choice, use transfers.txt to define additional rules for making connections between routes.
  *
  * @author trein
  */
-@Entity(name = "gtfs_transfers")
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Transfer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransferDto {
     private long id;
-    
-    @ManyToOne
-    @JoinColumn(name = "from_stop", nullable = false)
-    private Stop fromStop;
-    
-    @ManyToOne
-    @JoinColumn(name = "to_stop", nullable = false)
-    private Stop toStop;
-
-    @Column(name = "transfer_type")
+    private StopDto fromStop;
+    private StopDto toStop;
     private TransferType transferType;
-
-    @Column(name = "min_transfer")
     private long minTransferTimeSecs;
 
-    Transfer() {
-    }
-
-    public Transfer(Stop fromStop, Stop toStop, TransferType transferType, long minTransferTimeSecs) {
-        this.fromStop = fromStop;
-        this.toStop = toStop;
-        this.transferType = transferType;
-        this.minTransferTimeSecs = minTransferTimeSecs;
-    }
-    
     /**
      * from_stop_id Required The from_stop_id field contains a stop ID that identifies a stop or
-     * station where a connection between routes begins. Stop IDs are referenced from the stops.txt
+     * station where a connection between routes begins. StopDto IDs are referenced from the stops.txt
      * file. If the stop ID refers to a station that contains multiple stops, this transfer rule
      * applies to all stops in that station.
      */
-    public Stop getFromStop() {
+    public StopDto getFromStop() {
         return this.fromStop;
     }
 
     /**
      * to_stop_id Required The to_stop_id field contains a stop ID that identifies a stop or station
-     * where a connection between routes ends. Stop IDs are referenced from the stops.txt file. If
+     * where a connection between routes ends. StopDto IDs are referenced from the stops.txt file. If
      * the stop ID refers to a station that contains multiple stops, this transfer rule applies to
      * all stops in that station.
      */
-    public Stop getToStop() {
+    public StopDto getToStop() {
         return this.toStop;
     }
 
@@ -95,21 +72,6 @@ public class Transfer {
      */
     public long getMinTransferTimeSecs() {
         return this.minTransferTimeSecs;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

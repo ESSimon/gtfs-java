@@ -1,64 +1,28 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Fare information for a transit organization's routes.
+ * FareDto information for a transit organization's routes.
  *
  * @author trein
  */
-@Entity(name = "gtfs_fare_attributes")
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FareAttribute {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "fare")
-    private Fare fare;
-    
-    @Column(name = "price", nullable = false)
+    private FareDto fare;
     private double price;
-    
-    @Column(name = "currency_type")
-    private CurrencyType currencyType;
-    
-    @Column(name = "payment_type")
+    private CurrencyTypeDto currencyType;
     private PaymentType paymentType;
-    
-    @Column(name = "transfer_type")
     private FareTransferType transferType;
-    
-    @Column(name = "transfer_duration")
     private double transferDuration;
 
-    FareAttribute() {
-    }
-
-    public FareAttribute(Fare fare, double price, CurrencyType currencyType, PaymentType paymentType,
-            FareTransferType transferType, double duration) {
-        this.fare = fare;
-        this.price = price;
-        this.currencyType = currencyType;
-        this.paymentType = paymentType;
-        this.transferType = transferType;
-        this.transferDuration = duration;
-    }
-    
     public long getId() {
         return this.id;
     }
@@ -67,7 +31,7 @@ public class FareAttribute {
      * fare_id Required The fare_id field contains an ID that uniquely identifies a fare class. The
      * fare_id is dataset unique.
      */
-    public Fare getFare() {
+    public FareDto getFare() {
         return this.fare;
     }
     
@@ -84,7 +48,7 @@ public class FareAttribute {
      * Please use the ISO 4217 alphabetical currency codes which can be found at the following URL:
      * http://www.iso.org/iso/home/standards/iso4217.htm.
      */
-    public CurrencyType getCurrencyType() {
+    public CurrencyTypeDto getCurrencyType() {
         return this.currencyType;
     }
     
@@ -93,8 +57,8 @@ public class FareAttribute {
      * values for this field are:
      *
      * <pre>
-     * 0 - Fare is paid on board.
-     * 1 - Fare must be paid before boarding.
+     * 0 - FareDto is paid on board.
+     * 1 - FareDto must be paid before boarding.
      * </pre>
      */
     public PaymentType getPaymentType() {
@@ -126,20 +90,4 @@ public class FareAttribute {
     public double getTransferDuration() {
         return this.transferDuration;
     }
-    
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-
 }

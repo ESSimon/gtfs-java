@@ -9,6 +9,7 @@
 
     <modules>
         <module>gtfs-jpa</module>
+        <module>gtfs-api</module>
         <module>gtfs-csv</module>
     </modules>
 

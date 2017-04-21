@@ -1,76 +1,32 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
-import com.trein.gtfs.dto.entity.StopLocationType;
-import com.trein.gtfs.dto.entity.WheelchairType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Individual locations where vehicles pick up or drop off passengers.
  *
  * @author trein
  */
-@Entity(name = "gtfs_stops")
-@Table(indexes = { @Index(name = "o_stop_idx", columnList = "o_stop_id") })
-//@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Stop {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class StopDto {
     private long id;
-    
-    @Column(name = "o_stop_id", nullable = false)
     private String stopId;
-    
-    @Column(name = "name", nullable = false)
     private String name;
-    
-    private Location latLng;
-    
-    @Column(name = "code")
+    private LocationDto latLng;
     private String code;
-    
-    @Column(name = "description")
     private String desc;
-    
-    @Column(name = "zone")
     private String zone;
-    
-    @Column(name = "url")
     private String url;
-    
-    @Column(name = "time_zone")
     private String timezone;
-    
-    @Column(name = "parent_station")
     private int parentStation;
-    
-    @Column(name = "wheelchair_type")
     private WheelchairType wheelchairType;
-    
-    @Column(name = "location_type")
     private StopLocationType locationType;
-    
-    Stop() {
-    }
-
-    public Stop(String stopId, String code, String name, String desc, Location latLng, String zone, String url,
-            StopLocationType locationType, int parentStation, String timezone, WheelchairType wheelchairType) {
-        this.stopId = stopId;
-        this.code = code;
-        this.name = name;
-        this.desc = desc;
-        this.latLng = latLng;
-        this.zone = zone;
-        this.url = url;
-        this.locationType = locationType;
-        this.parentStation = parentStation;
-        this.timezone = timezone;
-        this.wheelchairType = wheelchairType;
-    }
     
     public long getId() {
         return this.id;
@@ -88,7 +44,7 @@ public class Stop {
     
     /**
      * stop_code Optional The stop_code field contains short text or a number that uniquely
-     * identifies the stop for passengers. Stop codes are often used in phone-based transit
+     * identifies the stop for passengers. StopDto codes are often used in phone-based transit
      * information systems or printed on stop signage to make it easier for riders to get a stop
      * schedule or real-time arrival information for a particular stop. The stop_code field should
      * only be used for stop codes that are displayed to passengers. For internal codes, use
@@ -121,11 +77,11 @@ public class Stop {
     }
     
     /**
-     * Location of the current stop.
+     * LocationDto of the current stop.
      *
      * @return current stop's location.
      */
-    public Location getLatLng() {
+    public LocationDto getLatLng() {
         return this.latLng;
     }
     
@@ -246,19 +202,4 @@ public class Stop {
         return (this.parentStation == 0) && this.locationType.isStation();
     }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

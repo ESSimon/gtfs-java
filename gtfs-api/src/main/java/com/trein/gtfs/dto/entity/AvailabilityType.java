@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * drop_off_type / pick_up_type Optional The drop_off_type / pick_up_type field indicates whether

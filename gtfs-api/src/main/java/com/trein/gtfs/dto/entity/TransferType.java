@@ -1,4 +1,4 @@
-package com.trein.gtfs.jpa.entity;
+package com.trein.gtfs.dto.entity;
 
 /**
  * The transfer_type field specifies the type of connection for the specified (from_stop_id,
