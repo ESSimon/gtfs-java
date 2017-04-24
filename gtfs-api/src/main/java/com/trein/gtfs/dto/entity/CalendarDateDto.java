@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,15 +27,11 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CalendarDateDto {
-    private long id;
+public class CalendarDateDto implements Identifiable {
+    private Long id;
     private String serviceId;
     private Date date;
     private ExceptionType exceptionType;
-
-    public long getId() {
-        return this.id;
-    }
 
     /**
      * service_id Required The service_id contains an ID that uniquely identifies a set of dates

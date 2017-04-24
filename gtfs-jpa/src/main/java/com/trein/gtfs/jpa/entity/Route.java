@@ -1,9 +1,11 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.RouteType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,15 +14,14 @@ import javax.persistence.*;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_routes")
 @Table(indexes = { @Index(name = "o_route_idx", columnList = "o_route_id") })
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Route {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class Route extends RtlsEntity<Route> {
     @Column(name = "o_route_id")
     private String routeId;
     
@@ -48,25 +49,10 @@ public class Route {
     
     @Column(name = "hex_text_color")
     private String hexTextColor;
-    
-    Route() {
-    }
-    
-    public Route(String routeId, Agency agency, String shortName, String longName, String desc, RouteType type, String url,
-            String hexPathColor, String hexTextColor) {
-        this.routeId = routeId;
-        this.agency = agency;
-        this.shortName = shortName;
-        this.longName = longName;
-        this.desc = desc;
-        this.type = type;
-        this.url = url;
-        this.hexPathColor = hexPathColor;
-        this.hexTextColor = hexTextColor;
-    }
 
-    public long getId() {
-        return this.id;
+    @Override
+    protected Route me() {
+        return this;
     }
 
     /**
@@ -188,19 +174,4 @@ public class Route {
         return this.hexTextColor;
     }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

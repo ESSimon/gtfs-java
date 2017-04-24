@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TripDto {
-    private long id;
+public class TripDto implements Identifiable {
+    private Long id;
     private String tripId;
     private RouteDto route;
     private List<ShapeDto> shapes;
@@ -27,10 +28,6 @@ public class TripDto {
     private int blockId;
     private DirectionType directionType;
     private WheelchairType wheelchairType;
-
-    public long getId() {
-        return this.id;
-    }
 
     /**
      * trip_id Required The trip_id field contains an ID that identifies a trip. The trip_id is
@@ -100,7 +97,7 @@ public class TripDto {
      * For example, you could use the trip_headsign and direction_id fields together to assign a
      * name to travel in each direction for a set of trips. A trips.txt file could contain these
      * rows for use in time tables:
-     *
+     * <p>
      * <pre>
      *     trip_id,...,trip_headsign,direction_id
      *     1234,...,to Airport,0
@@ -139,7 +136,7 @@ public class TripDto {
 
     /**
      * wheelchair_accessible Optional
-     *
+     * <p>
      * <pre>
      *     0 (or empty) - indicates that there is no accessibility information for the trip
      *     1 - indicates that the vehicle being used on this particular trip can accommodate at least one rider in a wheelchair

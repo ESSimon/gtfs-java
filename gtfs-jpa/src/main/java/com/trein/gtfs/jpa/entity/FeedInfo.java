@@ -1,18 +1,14 @@
 package com.trein.gtfs.jpa.entity;
 
-import java.util.Date;
+import com.everysens.rtls.commons.entity.RtlsEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.Date;
 
 /**
  * Additional information about the feed itself, including publisher, version, and expiration
@@ -26,45 +22,37 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_feeds")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class FeedInfo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class FeedInfo extends RtlsEntity<FeedInfo> {
     @Column(name = "publisher_name", nullable = false)
-    private final String publisherName;
-    
+    private String publisherName;
+
     @Column(name = "publisher_url", nullable = false)
-    private final String pusblisherUrl;
-    
+    private String pusblisherUrl;
+
     @Column(name = "language", nullable = false)
-    private final String language;
-    
+    private String language;
+
     @Column(name = "start_date")
-    private final Date startDate;
-    
+    private Date startDate;
+
     @Column(name = "end_date")
-    private final Date endDate;
-    
+    private Date endDate;
+
     @Column(name = "version")
-    private final String version;
-    
-    public FeedInfo(String publisherName, String pusblisherUrl, String language, Date startDate, Date endDate, String version) {
-        this.publisherName = publisherName;
-        this.pusblisherUrl = pusblisherUrl;
-        this.language = language;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.version = version;
+    private String version;
+
+
+    @Override
+    protected FeedInfo me() {
+        return this;
     }
-    
-    public long getId() {
-        return this.id;
-    }
-    
+
     /**
      * feed_publisher_name Required The feed_publisher_name field contains the full name of the
      * organization that publishes the feed. (This may be the same as one of the agency_name values
@@ -74,7 +62,7 @@ public class FeedInfo {
     public String getPublisherName() {
         return this.publisherName;
     }
-    
+
     /**
      * feed_publisher_url Required The feed_publisher_url field contains the URL of the feed
      * publishing organization's website. (This may be the same as one of the agency_url values in
@@ -86,7 +74,7 @@ public class FeedInfo {
     public String getPusblisherUrl() {
         return this.pusblisherUrl;
     }
-    
+
     /**
      * feed_lang Required The feed_lang field contains a IETF BCP 47 language code specifying the
      * default language used for the text in this feed. This setting helps GTFS consumers choose
@@ -97,7 +85,7 @@ public class FeedInfo {
     public String getLanguage() {
         return this.language;
     }
-    
+
     /**
      * feed_start_date Optional The feed provides complete and reliable schedule information for
      * service in the period from the beginning of the feed_start_date day to the end of the
@@ -113,7 +101,7 @@ public class FeedInfo {
     public Date getStartDate() {
         return this.startDate;
     }
-    
+
     /**
      * feed_end_date Optional The feed provides complete and reliable schedule information for
      * service in the period from the beginning of the feed_start_date day to the end of the
@@ -129,7 +117,7 @@ public class FeedInfo {
     public Date getEndDate() {
         return this.endDate;
     }
-    
+
     /**
      * feed_version Optional The feed publisher can specify a string here that indicates the current
      * version of their GTFS feed. GTFS-consuming applications can display this value to help feed
@@ -139,19 +127,4 @@ public class FeedInfo {
         return this.version;
     }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

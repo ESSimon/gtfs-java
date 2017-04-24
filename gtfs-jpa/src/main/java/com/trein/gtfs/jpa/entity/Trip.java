@@ -1,10 +1,12 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.DirectionType;
 import com.trein.gtfs.dto.entity.WheelchairType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,15 +16,14 @@ import java.util.List;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_trips")
-@Table(indexes = { @Index(name = "o_trip_idx", columnList = "o_trip_id") })
+@Table(indexes = {@Index(name = "o_trip_idx", columnList = "o_trip_id")})
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Trip {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class Trip extends RtlsEntity<Trip> {
     @Column(name = "o_trip_id", nullable = false)
     private String tripId;
 
@@ -33,7 +34,7 @@ public class Trip {
     @ManyToMany
     @OrderColumn(name = "sequence")
     private List<Shape> shapes;
-    
+
     @Column(name = "o_service_id", nullable = false)
     private String serviceId;
 
@@ -45,32 +46,16 @@ public class Trip {
 
     @Column(name = "block_id")
     private int blockId;
-    
+
     @Column(name = "direction_type")
     private DirectionType directionType;
 
     @Column(name = "wheelchair_type")
     private WheelchairType wheelchairType;
 
-    Trip() {
-
-    }
-
-    public Trip(String tripId, Route route, String serviceId, String headsign, String shortName, DirectionType directionType,
-            int blockId, List<Shape> shapes, WheelchairType wheelchairType) {
-        this.tripId = tripId;
-        this.route = route;
-        this.serviceId = serviceId;
-        this.headsign = headsign;
-        this.shortName = shortName;
-        this.directionType = directionType;
-        this.blockId = blockId;
-        this.shapes = shapes;
-        this.wheelchairType = wheelchairType;
-    }
-
-    public long getId() {
-        return this.id;
+    @Override
+    protected Trip me() {
+        return this;
     }
 
     /**
@@ -141,7 +126,7 @@ public class Trip {
      * For example, you could use the trip_headsign and direction_id fields together to assign a
      * name to travel in each direction for a set of trips. A trips.txt file could contain these
      * rows for use in time tables:
-     *
+     * <p>
      * <pre>
      *     trip_id,...,trip_headsign,direction_id
      *     1234,...,to Airport,0
@@ -180,31 +165,15 @@ public class Trip {
 
     /**
      * wheelchair_accessible Optional
-     *
+     * <p>
      * <pre>
      *     0 (or empty) - indicates that there is no accessibility information for the trip
      *     1 - indicates that the vehicle being used on this particular trip can accommodate at least one rider in a wheelchair
      *     2 - indicates that no riders in wheelchairs can be accommodated on this trip
      * </pre>
-     *
      */
     public WheelchairType getWheelchairType() {
         return this.wheelchairType;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgencyDto {
-    private long id;
+public class AgencyDto implements Identifiable{
+    private Long id;
     private String agencyId;
     private String name;
     private String url;
@@ -24,10 +25,6 @@ public class AgencyDto {
     private String lang;
     private String phone;
     private String fareUrl;
-
-    public long getId() {
-        return this.id;
-    }
 
     /**
      * agency_id Optional: The agency_id field is an ID that uniquely identifies a transit agency. A

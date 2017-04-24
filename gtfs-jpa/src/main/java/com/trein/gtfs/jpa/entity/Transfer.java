@@ -1,11 +1,16 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.TransferType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Rules for making connections at transfer points between routes.<br>
@@ -16,14 +21,13 @@ import javax.persistence.*;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_transfers")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Transfer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class Transfer extends RtlsEntity<Transfer> {
     @ManyToOne
     @JoinColumn(name = "from_stop", nullable = false)
     private Stop fromStop;
@@ -38,16 +42,11 @@ public class Transfer {
     @Column(name = "min_transfer")
     private long minTransferTimeSecs;
 
-    Transfer() {
+    @Override
+    protected Transfer me() {
+        return this;
     }
 
-    public Transfer(Stop fromStop, Stop toStop, TransferType transferType, long minTransferTimeSecs) {
-        this.fromStop = fromStop;
-        this.toStop = toStop;
-        this.transferType = transferType;
-        this.minTransferTimeSecs = minTransferTimeSecs;
-    }
-    
     /**
      * from_stop_id Required The from_stop_id field contains a stop ID that identifies a stop or
      * station where a connection between routes begins. Stop IDs are referenced from the stops.txt
@@ -95,21 +94,6 @@ public class Transfer {
      */
     public long getMinTransferTimeSecs() {
         return this.minTransferTimeSecs;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

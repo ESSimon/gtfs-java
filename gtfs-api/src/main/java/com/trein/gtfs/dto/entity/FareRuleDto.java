@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,18 +28,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FareRuleDto {
-    private long id;
+public class FareRuleDto implements Identifiable {
+    private Long id;
     private FareDto fare;
     private RouteDto route;
     private String originZone;
     private String destinationZone;
     private String contains;
 
-    public long getId() {
-        return this.id;
-    }
-    
+
     /**
      * fare_id Required The fare_id field contains an ID that uniquely identifies a fare class. This
      * value is referenced from the fare_attributes.txt file.

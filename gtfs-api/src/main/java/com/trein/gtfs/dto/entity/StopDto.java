@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StopDto {
-    private long id;
+public class StopDto implements Identifiable {
+    private Long id;
     private String stopId;
     private String name;
     private LocationDto latLng;
@@ -27,10 +28,6 @@ public class StopDto {
     private int parentStation;
     private WheelchairType wheelchairType;
     private StopLocationType locationType;
-    
-    public long getId() {
-        return this.id;
-    }
     
     /**
      * stop_id Required The stop_id field contains an ID that uniquely identifies a stop or station.

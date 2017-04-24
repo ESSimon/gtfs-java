@@ -20,5 +20,9 @@
             <version>1.16.16</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.everysens.rtls</groupId>
+            <artifactId>rtls-commons-api</artifactId>
+        </dependency>
     </dependencies>
 </project>

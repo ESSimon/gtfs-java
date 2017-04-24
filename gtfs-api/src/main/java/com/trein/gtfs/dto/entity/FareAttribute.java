@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,19 +15,15 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FareAttribute {
-    private long id;
+public class FareAttribute implements Identifiable {
+    private Long id;
     private FareDto fare;
     private double price;
-    private CurrencyTypeDto currencyType;
+    private CurrencyType currencyType;
     private PaymentType paymentType;
     private FareTransferType transferType;
     private double transferDuration;
 
-    public long getId() {
-        return this.id;
-    }
-    
     /**
      * fare_id Required The fare_id field contains an ID that uniquely identifies a fare class. The
      * fare_id is dataset unique.
@@ -48,7 +45,7 @@ public class FareAttribute {
      * Please use the ISO 4217 alphabetical currency codes which can be found at the following URL:
      * http://www.iso.org/iso/home/standards/iso4217.htm.
      */
-    public CurrencyTypeDto getCurrencyType() {
+    public CurrencyType getCurrencyType() {
         return this.currencyType;
     }
     

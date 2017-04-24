@@ -1,8 +1,10 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -20,20 +22,18 @@ import java.util.Date;
  */
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class FeedInfoDto {
-    private long id;
-    private final String publisherName;
-    private final String pusblisherUrl;
-    private final String language;
-    private final Date startDate;
-    private final Date endDate;
-    private final String version;
+public class FeedInfoDto implements Identifiable {
+    private Long id;
+    private String publisherName;
+    private String pusblisherUrl;
+    private String language;
+    private Date startDate;
+    private Date endDate;
+    private String version;
     
-    public long getId() {
-        return this.id;
-    }
-    
+
     /**
      * feed_publisher_name Required The feed_publisher_name field contains the full name of the
      * organization that publishes the feed. (This may be the same as one of the agency_name values

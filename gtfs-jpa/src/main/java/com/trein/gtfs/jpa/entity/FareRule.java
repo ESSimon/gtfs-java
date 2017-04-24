@@ -1,18 +1,15 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * Rules for applying fare information for a transit organization's routes.<br>
@@ -31,14 +28,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_fare_rules")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class FareRule {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class FareRule extends RtlsEntity<FareRule> {
     @ManyToOne(optional = true)
     @JoinColumn(name = "fare")
     private Fare fare;
@@ -56,21 +52,11 @@ public class FareRule {
     @Column(name = "contains_zone")
     private String contains;
 
-    FareRule() {
+    @Override
+    protected FareRule me() {
+        return this;
     }
-    
-    public FareRule(Fare fare, Route route, String originZone, String destinationZone, String contains) {
-        this.fare = fare;
-        this.route = route;
-        this.originZone = originZone;
-        this.destinationZone = destinationZone;
-        this.contains = contains;
-    }
-    
-    public long getId() {
-        return this.id;
-    }
-    
+
     /**
      * fare_id Required The fare_id field contains an ID that uniquely identifies a fare class. This
      * value is referenced from the fare_attributes.txt file.
@@ -148,18 +134,4 @@ public class FareRule {
         return this.contains;
     }
     
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
 }

@@ -187,13 +187,13 @@ package com.trein.gtfs.dto.entity;
  *
  * @author trein
  */
-public enum CurrencyTypeDto {
+public enum CurrencyType {
     BRL("BRL", "Brazilian real"), USD("USD", "US dollar"), EUR("EUR", "Euro"), CAN("CAD", "Canadian dollar");
     
     private final String code;
     private final String description;
     
-    private CurrencyTypeDto(String code, String description) {
+    private CurrencyType(String code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -206,9 +206,9 @@ public enum CurrencyTypeDto {
         return this.description;
     }
     
-    public static CurrencyTypeDto fromCode(String code) {
+    public static CurrencyType fromCode(String code) {
         if (code != null) {
-            for (CurrencyTypeDto e : CurrencyTypeDto.values()) {
+            for (CurrencyType e : CurrencyType.values()) {
                 if (e.getCode().equals(code)) { return e; }
             }
         }

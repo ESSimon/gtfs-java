@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,16 +15,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShapeDto implements Comparable<ShapeDto> {
-    private long id;
+public class ShapeDto implements Comparable<ShapeDto>,Identifiable {
+    private Long id;
     private String shapeId;
     private long sequence;
     private double distanceTraveled;
     private LocationDto location;
-
-    public long getId() {
-        return this.id;
-    }
 
     /**
      * shape_id Required The shape_id field contains an ID that uniquely identifies a shape.

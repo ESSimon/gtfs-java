@@ -1,9 +1,20 @@
 package com.trein.gtfs.dto.entity;
 
-public class LocationDto {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class LocationDto implements Serializable {
     private double latitude;
     private double longitude;
-    
+
     /**
      * stop_lat Required The stop_lat field contains the latitude of a stop or station. The field
      * value must be a valid WGS 84 latitude.

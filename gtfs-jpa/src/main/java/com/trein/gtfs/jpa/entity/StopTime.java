@@ -1,11 +1,16 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.AvailabilityType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Time;
 
 /**
@@ -13,14 +18,13 @@ import java.sql.Time;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_stop_times")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class StopTime {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class StopTime extends RtlsEntity<StopTime> {
     @Column(name = "arrival_time", nullable = false)
     private Time arrivalTime;
     
@@ -50,26 +54,11 @@ public class StopTime {
     @Column(name = "shape_distance_traveled")
     private double shapeDistanceTraveled;
     
-    StopTime() {
+    @Override
+    protected StopTime me() {
+        return this;
     }
 
-    public StopTime(Trip trip, Time arrivalTime, Time departureTime, Stop stop, int stopSequence, String stopHeadsign,
-            AvailabilityType pickupType, AvailabilityType dropoffType, double shapeDistanceTraveled) {
-        this.trip = trip;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
-        this.stop = stop;
-        this.stopSequence = stopSequence;
-        this.stopHeadsign = stopHeadsign;
-        this.pickupType = pickupType;
-        this.dropoffType = dropoffType;
-        this.shapeDistanceTraveled = shapeDistanceTraveled;
-    }
-    
-    public long getId() {
-        return this.id;
-    }
-    
     /**
      * trip_id Required The trip_id field contains an ID that identifies a trip. This value is
      * referenced from the trips.txt file.
@@ -231,19 +220,4 @@ public class StopTime {
         return this.shapeDistanceTraveled;
     }
 
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
-    }
-    
 }

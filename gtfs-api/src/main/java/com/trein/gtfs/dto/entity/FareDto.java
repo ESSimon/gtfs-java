@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,19 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FareDto {
-    private long id;
+public class FareDto implements Identifiable {
+    private Long id;
     private String fareId;
-
-    public FareDto(String fareId) {
-        this.fareId = fareId;
-    }
-
-    public long getId() {
-        return this.id;
-    }
-
-    public String getFareId() {
-        return this.fareId;
-    }
 }

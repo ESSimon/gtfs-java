@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,8 @@ import java.sql.Time;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StopTimeDto {
-    private long id;
+public class StopTimeDto implements Identifiable {
+    private Long id;
     private Time arrivalTime;
     private Time departureTime;
     private TripDto trip;
@@ -27,10 +28,6 @@ public class StopTimeDto {
     private AvailabilityType pickupType;
     private AvailabilityType dropoffType;
     private double shapeDistanceTraveled;
-    
-    public long getId() {
-        return this.id;
-    }
     
     /**
      * trip_id Required The trip_id field contains an ID that identifies a trip. This value is

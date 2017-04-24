@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,18 +22,18 @@ import java.sql.Time;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FrequencyDto {
-    private long id;
+public class FrequencyDto implements Identifiable {
+    private Long id;
     private TripDto trip;
     private Time startTime;
     private Time endTime;
     private long headwaySecs;
     private ExactTimeType exactTime;
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-    
+
     /**
      * trip_id Required The trip_id contains an ID that identifies a trip on which the specified
      * frequency of service applies. TripDto IDs are referenced from the trips.txt file.
@@ -40,7 +41,7 @@ public class FrequencyDto {
     public TripDto getTrip() {
         return this.trip;
     }
-    
+
     /**
      * start_time Required The start_time field specifies the time at which service begins with the
      * specified frequency. The time is measured from "noon minus 12h" (effectively midnight, except
@@ -51,7 +52,7 @@ public class FrequencyDto {
     public Time getStartTime() {
         return this.startTime;
     }
-    
+
     /**
      * end_time Required The end_time field indicates the time at which service changes to a
      * different frequency (or ceases) at the first stop in the trip. The time is measured from
@@ -63,7 +64,7 @@ public class FrequencyDto {
     public Time getEndTime() {
         return this.endTime;
     }
-    
+
     /**
      * headway_secs Required The headway_secs field indicates the time between departures from the
      * same stop (headway) for this trip type, during the time interval specified by start_time and
@@ -71,7 +72,7 @@ public class FrequencyDto {
      * (the rows in frequencies.txt) shouldn't overlap for the same trip, since it's hard to
      * determine what should be inferred from two overlapping headways. However, a headway period
      * may begin at the exact same time that another one ends, for instance:
-     *
+     * <p>
      * <pre>
      * A, 05:00:00, 07:00:00, 600
      * B, 07:00:00, 12:00:00, 1200
@@ -80,19 +81,19 @@ public class FrequencyDto {
     public long getHeadwaySecs() {
         return this.headwaySecs;
     }
-    
+
     /**
      * exact_times Optional The exact_times field determines if frequency-based trips should be
      * exactly scheduled based on the specified headway information. Valid values for this field
      * are:
-     *
+     * <p>
      * <pre>
      * 0 or (empty) - FrequencyDto-based trips are not exactly scheduled. This is the default behavior.
      * 1 - FrequencyDto-based trips are exactly scheduled. For a frequencies.txt row, trips are scheduled
      * starting with trip_start_time = start_time + x * headway_secs for all x in (0, 1, 2, ...)
      * where trip_start_time < end_time.
      * </pre>
-     *
+     * <p>
      * The value of exact_times must be the same for all frequencies.txt rows with the same trip_id.
      * If exact_times is 1 and a frequencies.txt row has a start_time equal to end_time, no trip
      * must be scheduled. When exact_times is 1, care must be taken to choose an end_time value that

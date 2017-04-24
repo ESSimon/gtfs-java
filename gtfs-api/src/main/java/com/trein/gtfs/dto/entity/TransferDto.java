@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +19,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransferDto {
-    private long id;
+public class TransferDto implements Identifiable {
+    private Long id;
     private StopDto fromStop;
     private StopDto toStop;
     private TransferType transferType;
@@ -48,7 +49,7 @@ public class TransferDto {
     /**
      * transfer_type Required The transfer_type field specifies the type of connection for the
      * specified (from_stop_id, to_stop_id) pair. Valid values for this field are:
-     *
+     * <p>
      * <pre>
      * 0 or (empty) - This is a recommended transfer point between two routes.
      * 1 - This is a timed transfer point between two routes. The departing vehicle is expected

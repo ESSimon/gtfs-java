@@ -1,11 +1,14 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.ExceptionType;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
@@ -23,14 +26,14 @@ import java.util.Date;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_calendar_dates")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class CalendarDate {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
+public class CalendarDate extends RtlsEntity<CalendarDate> {
+
     @Column(name = "o_service_id", nullable = false)
     private String serviceId;
     
@@ -39,20 +42,12 @@ public class CalendarDate {
     
     @Column(name = "exception_type")
     private ExceptionType exceptionType;
-    
-    CalendarDate() {
+
+    @Override
+    protected CalendarDate me() {
+        return this;
     }
-    
-    public CalendarDate(String serviceId, Date date, ExceptionType exceptionType) {
-        this.serviceId = serviceId;
-        this.date = date;
-        this.exceptionType = exceptionType;
-    }
-    
-    public long getId() {
-        return this.id;
-    }
-    
+
     /**
      * service_id Required The service_id contains an ID that uniquely identifies a set of dates
      * when a service exception is available for one or more routes. Each (service_id, date) pair
@@ -87,20 +82,5 @@ public class CalendarDate {
      */
     public ExceptionType getExceptionType() {
         return this.exceptionType;
-    }
-    
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 }

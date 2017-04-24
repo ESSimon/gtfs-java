@@ -1,10 +1,15 @@
 package com.trein.gtfs.jpa.entity;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import com.everysens.rtls.commons.entity.RtlsEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 /**
  * One or more transit agencies that provide the data in this feed. Hibernate disables insert
@@ -12,15 +17,14 @@ import javax.persistence.*;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_agencies")
 @Table(indexes = { @Index(name = "o_agency_idx", columnList = "o_agency_id") })
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Agency {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+public class Agency extends RtlsEntity<Agency> {
     @Column(name = "o_agency_id", nullable = false)
     private String agencyId;
 
@@ -42,21 +46,9 @@ public class Agency {
     @Column(name = "fare_url", nullable = true)
     private String fareUrl;
 
-    Agency() {
-    }
-
-    public Agency(String agencyId, String name, String url, String timezone, String lang, String phone, String fareUrl) {
-        this.agencyId = agencyId;
-        this.name = name;
-        this.url = url;
-        this.timezone = timezone;
-        this.lang = lang;
-        this.phone = phone;
-        this.fareUrl = fareUrl;
-    }
-
-    public long getId() {
-        return this.id;
+    @Override
+    protected Agency me() {
+        return this;
     }
 
     /**
@@ -144,21 +136,6 @@ public class Agency {
      */
     public String getFareUrl() {
         return this.fareUrl;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

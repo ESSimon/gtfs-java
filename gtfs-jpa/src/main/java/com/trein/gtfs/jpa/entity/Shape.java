@@ -1,33 +1,29 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.entity.RtlsEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * Rules for drawing lines on a map to represent a transit organization's routes.
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_shapes")
-@Table(indexes = { @Index(name = "o_shape_idx", columnList = "o_shape_id") })
+@Table(indexes = {@Index(name = "o_shape_idx", columnList = "o_shape_id")})
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Shape implements Comparable<Shape> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+public class Shape extends RtlsEntity<Shape> implements Comparable<Shape> {
     @Column(name = "o_shape_id", nullable = false)
     private String shapeId;
 
@@ -36,22 +32,12 @@ public class Shape implements Comparable<Shape> {
 
     @Column(name = "distance")
     private double distanceTraveled;
-    
+
     private Location location;
 
-    Shape() {
-        
-    }
-    
-    public Shape(String shapeId, Location location, long sequence, double distanceTraveled) {
-        this.shapeId = shapeId;
-        this.location = location;
-        this.sequence = sequence;
-        this.distanceTraveled = distanceTraveled;
-    }
-
-    public long getId() {
-        return this.id;
+    @Override
+    protected Shape me() {
+        return this;
     }
 
     /**
@@ -66,19 +52,19 @@ public class Shape implements Comparable<Shape> {
      * ID. The field value must be a valid WGS 84 latitude. Each row in shapes.txt represents a
      * shape point in your shape definition. For example, if the shape "A_shp" has three points in
      * its definition, the shapes.txt file might contain these rows to define the shape:
-     *
+     * <p>
      * <pre>
      * A_shp,37.61956,-122.48161,0
      * A_shp,37.64430,-122.41070,6
      * A_shp,37.65863,-122.30839,11
      * </pre>
-     *
+     * <p>
      * shape_pt_lon Required The shape_pt_lon field associates a shape point's longitude with a
      * shape ID. The field value must be a valid WGS 84 longitude value from -180 to 180. Each row
      * in shapes.txt represents a shape point in your shape definition. For example, if the shape
      * "A_shp" has three points in its definition, the shapes.txt file might contain these rows to
      * define the shape:
-     *
+     * <p>
      * <pre>
      * A_shp,37.61956,-122.48161,0
      * A_shp,37.64430,-122.41070,6
@@ -95,7 +81,7 @@ public class Shape implements Comparable<Shape> {
      * must be non-negative integers, and they must increase along the trip. For example, if the
      * shape "A_shp" has three points in its definition, the shapes.txt file might contain these
      * rows to define the shape:
-     *
+     * <p>
      * <pre>
      * A_shp,37.61956,-122.48161,0
      * A_shp,37.64430,-122.41070,6
@@ -117,7 +103,7 @@ public class Shape implements Comparable<Shape> {
      * that are used for this field in the stop_times.txt file. For example, if a bus travels along
      * the three points defined above for A_shp, the additional shape_dist_traveled values (shown
      * here in kilometers) would look like this:
-     *
+     * <p>
      * <pre>
      * A_shp,37.61956,-122.48161,0,0
      * A_shp,37.64430,-122.41070,6,6.8310
@@ -131,21 +117,6 @@ public class Shape implements Comparable<Shape> {
     @Override
     public int compareTo(Shape o) {
         return (int) this.sequence - (int) o.sequence;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

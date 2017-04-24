@@ -1,18 +1,14 @@
 package com.trein.gtfs.jpa.entity;
 
-import java.util.Date;
+import com.everysens.rtls.commons.entity.RtlsEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.Date;
 
 /**
  * Dates for service IDs using a weekly schedule. Specify when service starts and ends, as well as
@@ -20,14 +16,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  *
  * @author trein
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "gtfs_calendars")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Calendar {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+public class Calendar extends RtlsEntity<Calendar> {
     @Column(name = "o_service_id", nullable = false)
     private String serviceId;
 
@@ -58,26 +53,9 @@ public class Calendar {
     @Column(name = "end_date")
     private Date endDate;
 
-    Calendar() {
-        
-    }
-
-    public Calendar(String serviceId, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday,
-            boolean saturday, boolean sunday, Date startDate, Date endDate) {
-        this.serviceId = serviceId;
-        this.monday = monday;
-        this.tuesday = tuesday;
-        this.wednesday = wednesday;
-        this.thursday = thursday;
-        this.friday = friday;
-        this.saturday = saturday;
-        this.sunday = sunday;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public long getId() {
-        return this.id;
+    @Override
+    protected Calendar me() {
+        return this;
     }
 
     /**
@@ -210,21 +188,6 @@ public class Calendar {
      */
     public Date getEndDate() {
         return this.endDate;
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
-    
-    @Override
-    public String toString() {
-        return new ReflectionToStringBuilder(this).build();
     }
 
 }

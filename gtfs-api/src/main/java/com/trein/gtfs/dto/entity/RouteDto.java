@@ -1,5 +1,6 @@
 package com.trein.gtfs.dto.entity;
 
+import com.everysens.rtls.commons.dto.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteDto {
-    private long id;
+public class RouteDto implements Identifiable {
+    private Long id;
     private String routeId;
     private AgencyDto agency;
     private String shortName;
@@ -25,10 +26,6 @@ public class RouteDto {
     private String url;
     private String hexPathColor;
     private String hexTextColor;
-
-    public long getId() {
-        return this.id;
-    }
 
     /**
      * route_id Required The route_id field contains an ID that uniquely identifies a route. The
