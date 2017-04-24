@@ -1,10 +1,9 @@
 package com.trein.gtfs.jpa.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.everysens.rtls.commons.repository.GenericRepository;
 import com.trein.gtfs.jpa.entity.Agency;
 
-public interface AgencyRepository extends JpaRepository<Agency, Long> {
+public interface AgencyRepository extends GenericRepository<Agency, Long> {
     
     Agency findByAgencyId(String id);
 }

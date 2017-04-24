@@ -1,9 +1,9 @@
 package com.trein.gtfs.jpa.repository;
 
+import com.everysens.rtls.commons.repository.GenericRepository;
 import com.trein.gtfs.jpa.entity.Trip;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TripRepository extends JpaRepository<Trip, Long> {
+public interface TripRepository extends GenericRepository<Trip, Long> {
 
     Trip findByTripId(String tripId);
     

@@ -1,9 +1,9 @@
 package com.trein.gtfs.jpa.repository;
 
+import com.everysens.rtls.commons.repository.GenericRepository;
 import com.trein.gtfs.jpa.entity.Stop;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StopRepository extends JpaRepository<Stop, Long> {
+public interface StopRepository extends GenericRepository<Stop, Long> {
 
     Stop findByStopId(String parentStation);
 
