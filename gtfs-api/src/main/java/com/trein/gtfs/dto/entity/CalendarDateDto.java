@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Exceptions for the service IDs defined in the calendar.txt file. If calendar_dates.txt includes
@@ -30,7 +29,7 @@ import java.util.Date;
 public class CalendarDateDto implements Identifiable {
     private Long id;
     private String serviceId;
-    private Date date;
+    private DateTime date;
     private ExceptionType exceptionType;
 
     /**
@@ -54,7 +53,7 @@ public class CalendarDateDto implements Identifiable {
      *
      * @return date identifying current entry.
      */
-    public Date getDate() {
+    public DateTime getDate() {
         return this.date;
     }
 

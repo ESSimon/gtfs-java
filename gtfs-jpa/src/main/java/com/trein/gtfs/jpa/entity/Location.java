@@ -1,5 +1,8 @@
 package com.trein.gtfs.jpa.entity;
 
+import com.everysens.rtls.commons.util.geometry.GeometryUtil;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Point;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +23,11 @@ public class Location {
 
     @Column(name = "longitude")
     private double longitude;
-    
+
+    public static Location from(Point point) {
+        return Location.builder().latitude(point.getY()).longitude(point.getX()).build();
+    }
+
     /**
      * stop_lat Required The stop_lat field contains the latitude of a stop or station. The field
      * value must be a valid WGS 84 latitude.
@@ -41,4 +48,11 @@ public class Location {
         return this.longitude;
     }
 
+    public Point toPoint() {
+        return GeometryUtil.getPoint(longitude, latitude);
+    }
+
+    public Coordinate toCoordinate() {
+        return new Coordinate(longitude, latitude);
+    }
 }

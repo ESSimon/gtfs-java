@@ -52,7 +52,7 @@ public class StopTime extends RtlsEntity<StopTime> {
     private AvailabilityType dropoffType;
     
     @Column(name = "shape_distance_traveled")
-    private double shapeDistanceTraveled;
+    private Double shapeDistanceTraveled;
     
     @Override
     protected StopTime me() {
@@ -216,7 +216,7 @@ public class StopTime extends RtlsEntity<StopTime> {
      *
      * @return distance traveled indicated by this stop time.
      */
-    public double getShapeDistanceTraveled() {
+    public Double getShapeDistanceTraveled() {
         return this.shapeDistanceTraveled;
     }
 

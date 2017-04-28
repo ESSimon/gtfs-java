@@ -31,7 +31,7 @@ public class Shape extends RtlsEntity<Shape> implements Comparable<Shape> {
     private long sequence;
 
     @Column(name = "distance")
-    private double distanceTraveled;
+    private Double distanceTraveled;
 
     private Location location;
 
@@ -110,7 +110,7 @@ public class Shape extends RtlsEntity<Shape> implements Comparable<Shape> {
      * A_shp,37.65863,-122.30839,11,15.8765
      * </pre>
      */
-    public double getDistanceTraveled() {
+    public Double getDistanceTraveled() {
         return this.distanceTraveled;
     }
 

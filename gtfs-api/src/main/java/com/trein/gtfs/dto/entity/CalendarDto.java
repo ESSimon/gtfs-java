@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Dates for service IDs using a weekly schedule. Specify when service starts and ends, as well as
@@ -28,8 +27,8 @@ public class CalendarDto implements Identifiable {
     private boolean friday;
     private boolean saturday;
     private boolean sunday;
-    private Date startDate;
-    private Date endDate;
+    private DateTime startDate;
+    private DateTime endDate;
 
     /**
      * service_id Required The service_id contains an ID that uniquely identifies a set of dates
@@ -151,7 +150,7 @@ public class CalendarDto implements Identifiable {
      * start_date Required The start_date field contains the start date for the service. The
      * start_date field's value should be in YYYYMMDD format.
      */
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return this.startDate;
     }
 
@@ -159,7 +158,7 @@ public class CalendarDto implements Identifiable {
      * end_date Required The end_date field contains the end date for the service. This date is
      * included in the service interval. The end_date field's value should be in YYYYMMDD format.
      */
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return this.endDate;
     }
 

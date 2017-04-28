@@ -50,7 +50,7 @@ public class Stop extends RtlsEntity<Stop> {
     private String timezone;
 
     @Column(name = "parent_station")
-    private int parentStation;
+    private Integer parentStation;
 
     @Column(name = "wheelchair_type")
     private WheelchairType wheelchairType;
@@ -167,7 +167,7 @@ public class Stop extends RtlsEntity<Stop> {
      *
      * @return current stop's parent station id.
      */
-    public int getParentStation() {
+    public Integer getParentStation() {
         return this.parentStation;
     }
 

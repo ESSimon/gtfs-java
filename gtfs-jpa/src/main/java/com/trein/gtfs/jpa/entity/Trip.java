@@ -3,13 +3,12 @@ package com.trein.gtfs.jpa.entity;
 import com.everysens.rtls.commons.entity.RtlsEntity;
 import com.trein.gtfs.dto.entity.DirectionType;
 import com.trein.gtfs.dto.entity.WheelchairType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * One or more transit agencies that provide the data in this feed.
@@ -21,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "gtfs_trips")
+@EqualsAndHashCode(exclude = {"shapes", "stopTimes", "route"})
 @Table(indexes = {@Index(name = "o_trip_idx", columnList = "o_trip_id")})
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Trip extends RtlsEntity<Trip> {
@@ -33,7 +33,7 @@ public class Trip extends RtlsEntity<Trip> {
 
     @ManyToMany
     @OrderColumn(name = "sequence")
-    private List<Shape> shapes;
+    private Set<Shape> shapes;
 
     @Column(name = "o_service_id", nullable = false)
     private String serviceId;
@@ -52,6 +52,10 @@ public class Trip extends RtlsEntity<Trip> {
 
     @Column(name = "wheelchair_type")
     private WheelchairType wheelchairType;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trip")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Set<StopTime> stopTimes;
 
     @Override
     protected Trip me() {
@@ -159,7 +163,7 @@ public class Trip extends RtlsEntity<Trip> {
      *
      * @return shares related to the current trip.
      */
-    public List<Shape> getShapes() {
+    public Set<Shape> getShapes() {
         return this.shapes;
     }
 

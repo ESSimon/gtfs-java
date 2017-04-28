@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Date;
 
 /**
  * Exceptions for the service IDs defined in the calendar.txt file. If calendar_dates.txt includes
@@ -38,7 +38,7 @@ public class CalendarDate extends RtlsEntity<CalendarDate> {
     private String serviceId;
     
     @Column(name = "date", nullable = false)
-    private Date date;
+    private DateTime date;
     
     @Column(name = "exception_type")
     private ExceptionType exceptionType;
@@ -69,7 +69,7 @@ public class CalendarDate extends RtlsEntity<CalendarDate> {
      *
      * @return date identifying current entry.
      */
-    public Date getDate() {
+    public DateTime getDate() {
         return this.date;
     }
     

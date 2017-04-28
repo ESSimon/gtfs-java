@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Date;
 
 /**
  * Additional information about the feed itself, including publisher, version, and expiration
@@ -39,10 +39,10 @@ public class FeedInfo extends RtlsEntity<FeedInfo> {
     private String language;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private DateTime startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private DateTime endDate;
 
     @Column(name = "version")
     private String version;
@@ -98,7 +98,7 @@ public class FeedInfo extends RtlsEntity<FeedInfo> {
      * assertion that there is no service for dates within the feed_start_date or feed_end_date
      * range but not included in the active calendar dates.
      */
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return this.startDate;
     }
 
@@ -114,7 +114,7 @@ public class FeedInfo extends RtlsEntity<FeedInfo> {
      * assertion that there is no service for dates within the feed_start_date or feed_end_date
      * range but not included in the active calendar dates.
      */
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return this.endDate;
     }
 

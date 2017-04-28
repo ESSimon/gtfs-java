@@ -3,9 +3,9 @@ package com.trein.gtfs.jpa.entity.app;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity(name = "gtfs_audit")
 //@Cache(region = "entity", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -17,7 +17,7 @@ public class Audit {
     private Long id;
     
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private DateTime createdAt;
     
     @Column(name = "requested_uri", nullable = false, columnDefinition = "TEXT")
     private String requestedUri;
@@ -43,14 +43,14 @@ public class Audit {
     
     @PrePersist
     protected void onCreate() {
-        this.createdAt = new Date();
+        this.createdAt = DateTime.now();
     }
-    
-    public Date getCreatedAt() {
+
+    public DateTime getCreatedAt() {
         return this.createdAt;
     }
-    
-    public void setCreatedAt(Date createdAt) {
+
+    public void setCreatedAt(DateTime createdAt) {
         this.createdAt = createdAt;
     }
     

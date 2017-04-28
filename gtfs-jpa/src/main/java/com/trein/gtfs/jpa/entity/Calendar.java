@@ -1,14 +1,13 @@
 package com.trein.gtfs.jpa.entity;
 
 import com.everysens.rtls.commons.entity.RtlsEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import org.joda.time.DateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import java.util.Date;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Dates for service IDs using a weekly schedule. Specify when service starts and ends, as well as
@@ -18,6 +17,7 @@ import java.util.Date;
  */
 @Data
 @Builder
+@EqualsAndHashCode(exclude = {"trips"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "gtfs_calendars")
@@ -48,10 +48,15 @@ public class Calendar extends RtlsEntity<Calendar> {
     private boolean sunday;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private DateTime startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private DateTime endDate;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "o_service_id", referencedColumnName = "o_service_id", insertable = false, updatable = false)
+    private Set<Trip> trips;
 
     @Override
     protected Calendar me() {
@@ -71,12 +76,12 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * monday Required The monday field contains a binary value that indicates whether the service
      * is valid for all Mondays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Mondays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Mondays in the date range.
      * </pre>
-     *
+     * <p>
      * Note: You may list exceptions for particular dates, such as holidays, in the
      * calendar_dates.txt file.
      */
@@ -87,12 +92,12 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * tuesday Required The tuesday field contains a binary value that indicates whether the service
      * is valid for all Tuesdays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Tuesdays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Tuesdays in the date range.
      * </pre>
-     *
+     * <p>
      * Note: You may list exceptions for particular dates, such as holidays, in the
      * calendar_dates.txt file.
      */
@@ -103,7 +108,7 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * wednesday Required The wednesday field contains a binary value that indicates whether the
      * service is valid for all Wednesdays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Wednesdays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Wednesdays in the date range.
@@ -116,7 +121,7 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * thursday Required The thursday field contains a binary value that indicates whether the
      * service is valid for all Thursdays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Thursdays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Thursdays in the date range.
@@ -129,12 +134,12 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * friday Required The friday field contains a binary value that indicates whether the service
      * is valid for all Fridays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Fridays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Fridays in the date range.
      * </pre>
-     *
+     * <p>
      * Note: You may list exceptions for particular dates, such as holidays, in the
      * calendar_dates.txt file
      */
@@ -145,12 +150,12 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * saturday Required The saturday field contains a binary value that indicates whether the
      * service is valid for all Saturdays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Saturdays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Saturdays in the date range.
      * </pre>
-     *
+     * <p>
      * Note: You may list exceptions for particular dates, such as holidays, in the
      * calendar_dates.txt file.
      */
@@ -161,12 +166,12 @@ public class Calendar extends RtlsEntity<Calendar> {
     /**
      * sunday Required The sunday field contains a binary value that indicates whether the service
      * is valid for all Sundays.
-     *
+     * <p>
      * <pre>
      *     A value of 1 indicates that service is available for all Sundays in the date range. (The date range is specified using the start_date and end_date fields.)
      *     A value of 0 indicates that service is not available on Sundays in the date range.
      * </pre>
-     *
+     * <p>
      * Note: You may list exceptions for particular dates, such as holidays, in the
      * calendar_dates.txt file.
      */
@@ -178,7 +183,7 @@ public class Calendar extends RtlsEntity<Calendar> {
      * start_date Required The start_date field contains the start date for the service. The
      * start_date field's value should be in YYYYMMDD format.
      */
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return this.startDate;
     }
 
@@ -186,7 +191,7 @@ public class Calendar extends RtlsEntity<Calendar> {
      * end_date Required The end_date field contains the end date for the service. This date is
      * included in the service interval. The end_date field's value should be in YYYYMMDD format.
      */
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return this.endDate;
     }
 

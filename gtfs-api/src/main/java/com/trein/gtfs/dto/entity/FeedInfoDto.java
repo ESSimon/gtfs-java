@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Additional information about the feed itself, including publisher, version, and expiration
@@ -29,8 +28,8 @@ public class FeedInfoDto implements Identifiable {
     private String publisherName;
     private String pusblisherUrl;
     private String language;
-    private Date startDate;
-    private Date endDate;
+    private DateTime startDate;
+    private DateTime endDate;
     private String version;
     
 
@@ -79,7 +78,7 @@ public class FeedInfoDto implements Identifiable {
      * assertion that there is no service for dates within the feed_start_date or feed_end_date
      * range but not included in the active calendar dates.
      */
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return this.startDate;
     }
     
@@ -95,7 +94,7 @@ public class FeedInfoDto implements Identifiable {
      * assertion that there is no service for dates within the feed_start_date or feed_end_date
      * range but not included in the active calendar dates.
      */
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return this.endDate;
     }
     
