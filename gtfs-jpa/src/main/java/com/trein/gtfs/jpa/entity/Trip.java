@@ -31,7 +31,7 @@ public class Trip extends RtlsEntity<Trip> {
     @JoinColumn(name = "route", nullable = false)
     private Route route;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @OrderColumn(name = "sequence")
     private Set<Shape> shapes;
 
